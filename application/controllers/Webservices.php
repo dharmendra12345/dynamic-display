@@ -2567,8 +2567,8 @@ public function version(){
 		    }
 		  }
 
-		 $deletData = $this->Common_model->delete('cfs',array('device_id'=>$data['device_id']));
-		 $deletData = $this->Common_model->delete('banner_image',array('banner_id'=>$emojiImages[0]->banner_id));
+		 //$deletData = $this->Common_model->delete('cfs',array('device_id'=>$data['device_id']));
+		 //$deletData = $this->Common_model->delete('banner_image',array('banner_id'=>$emojiImages[0]->banner_id));
 
 
          //print_r("<pre/>");
