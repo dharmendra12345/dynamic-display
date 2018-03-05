@@ -367,7 +367,7 @@ class Webservices extends CI_Controller{
 	 $query = $this->db->get($table_noti);
 	 foreach ( $query->result_array() as $row ){
 		  $response['type_id']     = $row['type_id'];	
-		  $response['folder_name1']     = $row['folder_name'];
+		  $response['folder_name']     = $row['folder_name'];
 	 }
 	 $deletData = $this->Common_model->delete('notification',array('device_id'=>$user_id));
 
