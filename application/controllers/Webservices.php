@@ -359,17 +359,17 @@ class Webservices extends CI_Controller{
 	    $response['non_schedule_download'] = array();
 	 }
 
-     $table_noti = "notification";
-	 $this->db->select("*");
-	 $this->db->where('device_id', $user_id);
-	 $this->db->order_by("id", "desc");
-	  $this->db->limit(1);
-	 $query = $this->db->get($table_noti);
-	 foreach ( $query->result_array() as $row ){
-		  $response['type_id']     = $row['type_id'];	
-		  $response['folder_name']     = $row['folder_name'];
-	 }
-	 $deletData = $this->Common_model->delete('notification',array('device_id'=>$user_id));
+     //$table_noti = "notification";
+	 //$this->db->select("*");
+	 //$this->db->where('device_id', $user_id);
+	 //$this->db->order_by("id", "desc");
+	  //$this->db->limit(1);
+	// $query = $this->db->get($table_noti);
+	 //foreach ( $query->result_array() as $row ){
+		  //$response['type_id']     = $row['type_id'];	
+		 // $response['folder_name']     = $row['folder_name'];
+	 //}
+	 //$deletData = $this->Common_model->delete('notification',array('device_id'=>$user_id));
 
 	 if($user_id){
 	    $this->db->select("*");
@@ -450,6 +450,7 @@ class Webservices extends CI_Controller{
 		  $response['send_version']                 = $row['send_version'];
 		  $response['is_push']                      = $row['is_push'];
 		  $response['font_name']                      = $row['font_name'];
+		  $response['notification_api_hit_interval']                      = $row['notification_api_hit_interval'];
 		 
 		 
 	 }
@@ -466,6 +467,32 @@ class Webservices extends CI_Controller{
     header('Content-type: application/json');
 	echo json_encode($response);
    }
+   function notification(){
+   	
+     	$data['device_id']	       =	$this->input->get_post('device_id');
+        if(empty($data['device_id'])){
+		$error['message'] = "device id:Required parameter missing";
+		$error['status'] = "0";
+        }else{
+             $table_noti = "notification";
+	         $this->db->select("*");
+	         $this->db->where('device_id', $data['device_id']);
+	         $this->db->order_by("id", "desc");
+	         $this->db->limit(1);
+	         $query = $this->db->get($table_noti);
+	         if($query->result_array()){
+		         foreach ( $query->result_array() as $row ){
+			      $error['type_id']     = $row['type_id'];	
+			      $error['folder_name']     = $row['folder_name'];
+		         }
+		      }else{
+		      	$error['status'] = 0;
+			    $error['message'] = "No data found";
+		    }   
+        }
+     header('Content-type: application/json');
+     echo json_encode($error);
+  }
    
    function poll_service2(){
    
